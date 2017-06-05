@@ -6,6 +6,6 @@ If there are any problems, please feel free to contact to me or create new pull 
 * git clone git@github.com:chariot9/shadow-news-loader.git
 ## Compile and run API
 ### Compile by maven
-Execute: `mvn clean install`  
+Execute: `gradle build`  
 ## License
 Created by Trung, Yokohama Japan 2017 
