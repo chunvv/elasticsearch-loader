@@ -1,0 +1,4 @@
+rootProject.name = 'shadow-news-loader'
+include 'news-loader-domain'
+include 'news-loader-infrastructure'
+
