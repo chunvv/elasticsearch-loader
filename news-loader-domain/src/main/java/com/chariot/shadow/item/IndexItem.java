@@ -1,7 +1,6 @@
-package com.chariot.shadow.index;
+package com.chariot.shadow.item;
 
 import com.chariot.shadow.id.Id;
-import com.chariot.shadow.item.Item;
 import com.chariot.shadow.parent.Parent;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -13,14 +12,14 @@ import java.util.Map;
  */
 @Value
 @AllArgsConstructor
-public class Index implements Item {
+public class IndexItem implements Item {
 
     private IndexType indexType;
     private Id id;
     private Map<String, Object> source;
     private Parent parent;
 
-    public Index(IndexType indexType, Id id, Map<String, Object> source) {
+    public IndexItem(IndexType indexType, Id id, Map<String, Object> source) {
         this(indexType, id, source, null);
     }
 

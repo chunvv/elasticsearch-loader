@@ -1,4 +1,4 @@
-package com.chariot.shadow.index;
+package com.chariot.shadow.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

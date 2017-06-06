@@ -1,4 +1,4 @@
-package com.chariot.shadow.requester;
+package com.chariot.shadow.indexing;
 
 import com.chariot.shadow.item.Item;
 
