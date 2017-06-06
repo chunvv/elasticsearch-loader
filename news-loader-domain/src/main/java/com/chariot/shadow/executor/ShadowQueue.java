@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Trung Vu on 2017/06/06.
  */
 @Value
-public class ShadowQuene {
+public class ShadowQueue {
 
     private final int size;
 
@@ -22,12 +22,21 @@ public class ShadowQuene {
 
     private AtomicInteger requested;
     private AtomicInteger completed;
+    private AtomicInteger loading;
 
-    public ShadowQuene(int size) {
+    public ShadowQueue(int size) {
         this.size = size;
         this.queue = new ConcurrentLinkedDeque<>();
         this.running = new ArrayList<>();
         this.requested = new AtomicInteger();
         this.completed = new AtomicInteger();
+    }
+
+    public void startLoading() {
+        loading.getAndAdd(1);
+    }
+
+    public void endLoading() {
+        loading.getAndAdd(-1);
     }
 }
