@@ -15,6 +15,7 @@ subprojects {
         compile group: 'org.springframework', name: 'spring-context', version: '4.3.8.RELEASE'
         compile group: 'org.springframework', name: 'spring-core', version: '4.3.8.RELEASE'
         compile 'org.projectlombok:lombok:1.16.6'
+        compile 'org.eclipse.persistence:eclipselink:2.5.0'
     }
 
     task wrapper(type: Wrapper) {
