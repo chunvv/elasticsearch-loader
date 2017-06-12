@@ -26,4 +26,12 @@ public class IndexItem implements Item {
     public String id() {
         return id.getId();
     }
+
+    public String getIndexTypeAsString() {
+        return indexType.getType();
+    }
+
+    public String getParentAsString() {
+        return parent.getParent();
+    }
 }

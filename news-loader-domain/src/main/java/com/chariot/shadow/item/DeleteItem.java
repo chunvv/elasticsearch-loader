@@ -15,4 +15,8 @@ public class DeleteItem implements Item {
     public String id() {
         return id.getId();
     }
+
+    public String getIndexTypeAsString() {
+        return indexType.getType();
+    }
 }

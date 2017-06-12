@@ -8,6 +8,7 @@ subprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     dependencies {
@@ -16,6 +17,7 @@ subprojects {
         compile group: 'org.springframework', name: 'spring-core', version: '4.3.8.RELEASE'
         compile 'org.projectlombok:lombok:1.16.6'
         compile 'org.eclipse.persistence:eclipselink:2.5.0'
+        compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.4.1'
     }
 
     task wrapper(type: Wrapper) {

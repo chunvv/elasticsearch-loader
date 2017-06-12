@@ -3,4 +3,5 @@ include 'news-loader-domain'
 include 'news-loader-infrastructure'
 include 'news-loader-interface'
 include 'news-loader-repository'
+include 'news-loader-application'
 
