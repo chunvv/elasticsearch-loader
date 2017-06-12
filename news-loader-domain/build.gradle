@@ -1,8 +1,0 @@
-group 'com.chariot.shadow'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-
-repositories {
-    mavenCentral()
-}

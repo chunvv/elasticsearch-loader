@@ -1,9 +1,0 @@
-group 'com.chariot.shadow'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-
-dependencies {
-    compile project(':news-loader-domain')
-    compile project(':news-loader-infrastructure')
-}
