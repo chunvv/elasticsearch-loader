@@ -1,6 +1,7 @@
-package com.chariot.shadow.task;
+package com.chariot.shadow;
 
 import com.chariot.shadow.executor.ShadowQueue;
+import com.chariot.shadow.indexing.Index;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -10,15 +11,17 @@ import lombok.Value;
  */
 @Value
 @RequiredArgsConstructor
-public abstract class TaskLoader<T> implements Loader {
+public abstract class TaskLoader<T> implements Task {
 
     protected ShadowQueue queue;
     @NonNull
     protected T id;
 
     @Override
-    public Object call() throws Exception {
-        queue.startLoading();
-        return load();
+    public Index call() throws Exception {
+        queue.start();
+        Index index = load();
+        queue.end();
+        return index;
     }
 }

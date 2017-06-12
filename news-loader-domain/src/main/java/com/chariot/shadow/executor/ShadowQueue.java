@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by Trung Vu on 2017/06/06.
  */
 @Value
-public class ShadowQueue {
+public class ShadowQueue implements com.chariot.shadow.executor.Queue {
 
     private final int size;
 
@@ -32,11 +32,13 @@ public class ShadowQueue {
         this.completed = new AtomicInteger();
     }
 
-    public void startLoading() {
+    @Override
+    public void start() {
         loading.getAndAdd(1);
     }
 
-    public void endLoading() {
+    @Override
+    public void end() {
         loading.getAndAdd(-1);
     }
 }
