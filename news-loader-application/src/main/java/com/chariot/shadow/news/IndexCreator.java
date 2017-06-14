@@ -18,7 +18,7 @@ import java.util.List;
 @Value
 public class IndexCreator {
 
-    public IndexRequestBuilder createIndex(Client client, String indexName, IndexItem item) {
+    public static IndexRequestBuilder createIndex(Client client, String indexName, IndexItem item) {
         IndexRequestBuilder index =
                 client.prepareIndex(
                         indexName,
@@ -34,11 +34,11 @@ public class IndexCreator {
         return index;
     }
 
-    public DeleteRequestBuilder createDelete(Client client, String indexName, DeleteItem item) {
+    public static DeleteRequestBuilder createDelete(Client client, String indexName, DeleteItem item) {
         return client.prepareDelete(indexName, item.getIndexTypeAsString(), item.id());
     }
 
-    public BulkRequestBuilder createBulkIndex(Client client, List<Item> items, String indexName) {
+    public static BulkRequestBuilder createBulkIndex(Client client, List<Item> items, String indexName) {
         BulkRequestBuilder bulkIndex = client.prepareBulk();
         items.forEach(item -> {
             if (item instanceof IndexItem) {

@@ -24,4 +24,6 @@ public interface Queue {
     boolean hasExecutable();
     
     List<Item> pollFirst();
+    
+    void increaseComplete(int size);
 }
