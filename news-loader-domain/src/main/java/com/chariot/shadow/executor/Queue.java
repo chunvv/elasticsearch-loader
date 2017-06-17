@@ -12,18 +12,20 @@ public interface Queue {
     void start();
 
     void end();
-    
+
     int waitingSize();
-    
+
     void add(Item item);
-    
+
     void put();
-    
+
     void close();
-    
+
     boolean hasExecutable();
-    
+
     List<Item> pollFirst();
-    
+
     void increaseComplete(int size);
+
+    int indexingSize();
 }

@@ -84,4 +84,9 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
     public void increaseComplete(int size) {
         completed.addAndGet(size);
     }
+
+    @Override
+    public int indexingSize() {
+        return requested.get() - completed.get();
+    }
 }

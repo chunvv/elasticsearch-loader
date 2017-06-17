@@ -11,6 +11,7 @@ import org.elasticsearch.client.Client;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,23 +23,25 @@ import java.util.concurrent.Future;
 @Value
 public abstract class Loader implements Loadable {
 
-    private int size;
-    protected Client client;
     public static final String indexName = "news";
-
     private static int WAITING_THRESHOLD_PAUSE = 300;
     private static int WAITING_THRESHOLD_RESUME = 200;
+
+    private int queueSize;
+    private int executorSize;
+    protected Client client;
 
     private ShadowThreadPoolExecutor executor;
     private ShadowQueue queue;
     private LinkedList<Future<Index>> futures;
     private ExecutorService indexingExecutor = Executors.newFixedThreadPool(2);
 
-
     @Override
     public void init() {
-        size = 100;
-        executor = new ShadowThreadPoolExecutor(size);
+        queueSize = 100;
+        executorSize = 8;
+        executor = new ShadowThreadPoolExecutor(executorSize);
+        queue = new ShadowQueue(queueSize);
     }
 
     @Override
@@ -80,8 +83,8 @@ public abstract class Loader implements Loadable {
     @Override
     public void indexing() {
         List<Item> items;
-        while (queue.waitingSize() < WAITING_THRESHOLD_RESUME && (items = queue.pollFirst()) != null) {
-            indexingExecutor.execute(new ElasticsearchThread(this, items));
+        while (queue.indexingSize() < WAITING_THRESHOLD_RESUME && (items = queue.pollFirst()) != null) {
+            indexingExecutor.execute(new ElasticsearchThread(Optional.of(this), items));
         }
     }
 

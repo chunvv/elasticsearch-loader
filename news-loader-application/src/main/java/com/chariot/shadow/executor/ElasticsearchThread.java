@@ -7,6 +7,7 @@ import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Trung Vu on 2017/06/14.
@@ -14,39 +15,43 @@ import java.util.List;
 @Value
 public class ElasticsearchThread implements Runnable, Notifier<Loader, Message> {
 
-    private Loader loader;
+    private Optional<Loader> loader;
     private List<Item> items;
 
     @Override
     public void run() {
         List<String> successes = new ArrayList<>();
         List<String> errors = new ArrayList<>();
-        IndexCreator.
-                createBulkIndex(loader.getClient(), items, Loader.indexName).
-                execute().
-                actionGet().
-                forEach(response -> {
-                    if (response.isFailed()) {
-                        errors.add(response.getId());
-                    } else {
-                        successes.add(response.getId());
-                    }
-                });
-        notifyObserver(new Message(items.size(), successes, errors));
+        if (loader.isPresent()) {
+            IndexCreator.
+                    createBulkIndex(loader.get().getClient(), items, Loader.indexName).
+                    execute().
+                    actionGet().
+                    forEach(response -> {
+                        if (response.isFailed()) {
+                            errors.add(response.getId());
+                        } else {
+                            successes.add(response.getId());
+                        }
+                    });
+            notifyObserver(new Message(items.size(), successes, errors));
+        }
     }
 
     @Override
     public void attachObserver(Loader loader) {
-        this.loader = loader;
+        this.loader = Optional.of(loader);
     }
 
     @Override
     public void detachObserver(Loader loader) {
-        this.loader = null;
+        this.loader = Optional.empty();
     }
 
     @Override
     public void notifyObserver(Message message) {
-        loader.updateStatus(message);
+        if (loader.isPresent()) {
+            loader.get().updateStatus(message);
+        }
     }
 }
