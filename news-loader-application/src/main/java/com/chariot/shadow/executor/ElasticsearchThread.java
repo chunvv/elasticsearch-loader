@@ -24,7 +24,7 @@ public class ElasticsearchThread implements Runnable, Notifier<Loader, Message> 
         List<String> errors = new ArrayList<>();
         if (loader.isPresent()) {
             IndexCreator.
-                    createBulkIndex(loader.get().getClient(), items, Loader.indexName).
+                    createBulkIndex(loader.get().getClient(), items, Loader.INDEX_NAME).
                     execute().
                     actionGet().
                     forEach(response -> {

@@ -27,7 +27,7 @@ public class Elasticsearch {
 
         try {
             properties.load(new FileInputStream("/data/shadow/config/elasticsearch.properties"));
-            newsIndex = properties.getProperty("news.index", newsIndex);
+            newsIndex = properties.getProperty("news", newsIndex);
             nodes = properties.getProperty("nodes", nodes);
         } catch (IOException e) {
             throw new RuntimeException(e);

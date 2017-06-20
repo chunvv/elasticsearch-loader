@@ -1,11 +1,13 @@
 package com.chariot.shadow;
 
+import com.chariot.shadow.config.Elasticsearch;
 import com.chariot.shadow.executor.ElasticsearchThread;
 import com.chariot.shadow.executor.Message;
 import com.chariot.shadow.executor.ShadowQueue;
 import com.chariot.shadow.executor.ShadowThreadPoolExecutor;
 import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.Item;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 import org.elasticsearch.client.Client;
 
@@ -21,9 +23,10 @@ import java.util.concurrent.Future;
  * Created by Trung Vu on 2017/06/12.
  */
 @Value
+@NoArgsConstructor
 public abstract class Loader implements Loadable {
 
-    public static final String indexName = "news";
+    public static final String INDEX_NAME = "news";
     private static int WAITING_THRESHOLD_PAUSE = 300;
     private static int WAITING_THRESHOLD_RESUME = 200;
 
@@ -31,13 +34,14 @@ public abstract class Loader implements Loadable {
     private int executorSize;
     protected Client client;
 
-    private ShadowThreadPoolExecutor executor;
-    private ShadowQueue queue;
-    private LinkedList<Future<Index>> futures;
-    private ExecutorService indexingExecutor = Executors.newFixedThreadPool(2);
+    protected ShadowThreadPoolExecutor executor;
+    protected ShadowQueue queue;
+    protected LinkedList<Future<Index>> futures;
+    protected ExecutorService indexingExecutor = Executors.newFixedThreadPool(2);
 
     @Override
     public void init() {
+        client = Elasticsearch.getInstance();
         queueSize = 100;
         executorSize = 8;
         executor = new ShadowThreadPoolExecutor(executorSize);

@@ -19,22 +19,39 @@ public class NewsInfrastructure {
     @Autowired
     private EntityManager entityManager;
 
-    private NewsEntity find(String supplierId, String newsId) {
+    public NewsEntity find(String newsId) {
         CriteriaBuilder b = entityManager.getCriteriaBuilder();
         CriteriaQuery<NewsEntity> query = b.createQuery(NewsEntity.class);
-        query.where(newsDetectionPredicates(b, query.from(NewsEntity.class), supplierId, newsId));
+        query.where(newsDetectionPredicatesByNewsId(b, query.from(NewsEntity.class), newsId));
         List<NewsEntity> newsEntities = entityManager.createQuery(query).getResultList();
         return newsEntities.size() == 0 ? null : newsEntities.get(0);
     }
 
-    private Predicate[] newsDetectionPredicates(CriteriaBuilder builder, Root<NewsEntity> root, String supplierId, String newsId) {
+    public List<NewsEntity> retrieveInsertNews() {
+        CriteriaBuilder b = entityManager.getCriteriaBuilder();
+        CriteriaQuery<NewsEntity> query = b.createQuery(NewsEntity.class);
+        query.where(newsDetectionPredicatesByActionCode(b, query.from(NewsEntity.class), "I"));
+        List<NewsEntity> newsEntities = entityManager.createQuery(query).getResultList();
+        return newsEntities.size() == 0 ? null : newsEntities;
+    }
+
+    public List<NewsEntity> retrieveDeleteNews() {
+        CriteriaBuilder b = entityManager.getCriteriaBuilder();
+        CriteriaQuery<NewsEntity> query = b.createQuery(NewsEntity.class);
+        query.where(newsDetectionPredicatesByActionCode(b, query.from(NewsEntity.class), "D"));
+        List<NewsEntity> newsEntities = entityManager.createQuery(query).getResultList();
+        return newsEntities.size() == 0 ? null : newsEntities;
+    }
+
+    private Predicate[] newsDetectionPredicatesByActionCode(CriteriaBuilder builder, Root<NewsEntity> root, String actionCode) {
         return new Predicate[]{
-                builder.equal(root.get(NewsEntity_.supplierId), supplierId),
-                builder.equal(root.get(NewsEntity_.newsId), newsId)
+                builder.equal(root.get(NewsEntity_.actionCode), actionCode)
         };
     }
 
-    public NewsEntity find(String id) {
-        return entityManager.find(NewsEntity.class, id);
+    private Predicate[] newsDetectionPredicatesByNewsId(CriteriaBuilder builder, Root<NewsEntity> root, String newsId) {
+        return new Predicate[]{
+                builder.equal(root.get(NewsEntity_.newsId), newsId)
+        };
     }
 }
