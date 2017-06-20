@@ -1,14 +1,16 @@
-group 'com.chariot.shadow'
-version '1.0-SNAPSHOT'
 subprojects {
+    group 'com.chariot.shadow'
+    version '1.0-SNAPSHOT'
+    
     apply plugin: 'java'
+    apply plugin: 'maven'
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
     repositories {
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
     }
 
     dependencies {
@@ -17,10 +19,6 @@ subprojects {
         compile group: 'org.springframework', name: 'spring-core', version: '4.3.8.RELEASE'
         compile 'org.projectlombok:lombok:1.16.6'
         compile 'org.eclipse.persistence:eclipselink:2.5.0'
-        compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.4.1'
-    }
-
-    task wrapper(type: Wrapper) {
-        gradleVersion = '2.12' //we want gradle 2.10 to run this project
+        compile 'org.elasticsearch.client:transport:5.4.1'
     }
 }
