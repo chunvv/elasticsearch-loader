@@ -3,7 +3,8 @@ package com.chariot.shadow.executor;
 import com.chariot.shadow.Loader;
 import com.chariot.shadow.item.Item;
 import com.chariot.shadow.news.IndexCreator;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.Optional;
 /**
  * Created by Trung Vu on 2017/06/14.
  */
-@Value
+@AllArgsConstructor
+@Getter
 public class ElasticsearchThread implements Runnable, Notifier<Loader, Message> {
 
     private Optional<Loader> loader;

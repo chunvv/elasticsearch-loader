@@ -1,7 +1,6 @@
 package com.chariot.shadow.executor;
 
 import com.chariot.shadow.item.Item;
-import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Trung Vu on 2017/06/06.
  */
-@Value
 public class ShadowQueue implements com.chariot.shadow.executor.Queue {
 
     private final int size;

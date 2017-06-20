@@ -7,8 +7,8 @@ import com.chariot.shadow.executor.ShadowQueue;
 import com.chariot.shadow.executor.ShadowThreadPoolExecutor;
 import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.Item;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 import org.elasticsearch.client.Client;
 
 import java.util.LinkedList;
@@ -22,8 +22,8 @@ import java.util.concurrent.Future;
 /**
  * Created by Trung Vu on 2017/06/12.
  */
-@Value
 @NoArgsConstructor
+@Getter
 public abstract class Loader implements Loadable {
 
     public static final String INDEX_NAME = "news";

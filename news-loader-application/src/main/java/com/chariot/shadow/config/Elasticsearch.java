@@ -23,7 +23,7 @@ public class Elasticsearch {
     static {
         String newsIndex = "news";
         Properties properties = new Properties();
-        String nodes = "es-cluster01,es-cluster02";
+        String nodes = "127.0.0.1";
 
         try {
             properties.load(new FileInputStream("/data/shadow/config/elasticsearch.properties"));
