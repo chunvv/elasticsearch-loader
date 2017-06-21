@@ -2,19 +2,17 @@ package com.chariot.shadow;
 
 import com.chariot.shadow.executor.ShadowQueue;
 import com.chariot.shadow.indexing.Index;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Created by Trung Vu on 2017/06/06.
  */
-@RequiredArgsConstructor
 @Getter
+@AllArgsConstructor
 public abstract class TaskLoader<T> implements Task {
 
     protected ShadowQueue queue;
-    @NonNull
     protected T id;
 
     @Override

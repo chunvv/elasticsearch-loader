@@ -13,8 +13,9 @@ import java.util.stream.Stream;
 public enum SupplierType {
 
     SKY_NEWS(1, "S", "Sky News"),
-    IT_NEWS(2, "I", "IT News");
-
+    IT_NEWS(2, "I", "IT News"),
+    BLOOMBERG(3, "B", "Bloomberg");
+    
     private int id;
     private String code;
     private String name;
@@ -22,6 +23,6 @@ public enum SupplierType {
     public static SupplierType get(int id) {
         return Stream.of(values()).filter(value -> value.id == id).findFirst().orElseThrow(IllegalArgumentException::new);
     }
-    
-    
+
+
 }

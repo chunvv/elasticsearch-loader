@@ -1,7 +1,6 @@
 package com.chariot.shadow.news;
 
 import com.chariot.shadow.news.util.NewsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,8 +10,7 @@ import java.util.stream.Collectors;
  */
 public class NewsRepository {
 
-    @Autowired
-    private NewsInfrastructure newsInfrastructure;
+    private NewsInfrastructure newsInfrastructure = new NewsInfrastructure();
 
     public List<News> retrieveInsertNews() {
         return newsInfrastructure.retrieveInsertNews().stream().map(NewsMapper::map).collect(Collectors.toList());

@@ -29,6 +29,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
         this.running = new ArrayList<>();
         this.requested = new AtomicInteger();
         this.completed = new AtomicInteger();
+        this.loading = new AtomicInteger();
     }
 
     @Override

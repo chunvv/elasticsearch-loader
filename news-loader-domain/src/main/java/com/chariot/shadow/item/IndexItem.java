@@ -32,6 +32,6 @@ public class IndexItem implements Item {
     }
 
     public String getParentAsString() {
-        return parent.getParent();
+        return parent == null ? null : parent.getParent();
     }
 }

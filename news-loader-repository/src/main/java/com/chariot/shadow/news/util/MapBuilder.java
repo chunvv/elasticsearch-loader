@@ -12,7 +12,7 @@ public class MapBuilder {
 
     public static Map<String, Object> build(News news) {
         Map<String, Object> result = new HashMap<>();
-        
+
         result.put("newsId", news.getIdAsString());
         result.put("supplierId", news.getSupplierIdAsString());
         result.put("title", news.getTitleAsString());

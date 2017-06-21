@@ -4,7 +4,6 @@ import com.chariot.shadow.news.*;
 import com.chariot.shadow.news.factory.NewsFactory;
 import com.chariot.shadow.supplier.SupplierType;
 import com.chariot.shadow.supplier.factory.SupplierFactory;
-import lombok.Value;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,7 +14,6 @@ import java.sql.Timestamp;
  * <p>
  * Created by Trung Vu on 2017/05/24.
  */
-@Value
 public class NewsMapper {
 
     public static NewsEntity map(News news) {
@@ -36,7 +34,7 @@ public class NewsMapper {
                     new NewsID(newsEntity.getNewsId()),
                     new Title(newsEntity.getTitle()),
                     new Content(newsEntity.getContent()),
-                    new Link(new URL(newsEntity.getLink())),
+                    newsEntity.getLink() == null ? null : new Link(new URL(newsEntity.getLink())),
                     new PublicationDate(newsEntity.getPublishDate()),
                     SupplierFactory.create(
                             SupplierType.get(

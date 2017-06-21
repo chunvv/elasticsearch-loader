@@ -1,26 +1,23 @@
 package com.chariot.shadow.news;
 
 import com.chariot.shadow.TaskLoader;
+import com.chariot.shadow.executor.ShadowQueue;
 import com.chariot.shadow.id.Id;
 import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.IndexItem;
 import com.chariot.shadow.item.IndexType;
 import com.chariot.shadow.news.util.MapBuilder;
 import com.chariot.shadow.news.util.NewsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by Trung Vu on 2017/06/06.
  */
-@Component
 public class NewsIndexTaskLoader extends TaskLoader<Id> {
 
-    @Autowired
-    private NewsInfrastructure newsInfrastructure;
+    private NewsInfrastructure newsInfrastructure = new NewsInfrastructure();
 
-    public NewsIndexTaskLoader(Id id) {
-        super(id);
+    public NewsIndexTaskLoader(ShadowQueue queue, Id id) {
+        super(queue, id);
     }
 
     @Override

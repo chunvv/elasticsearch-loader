@@ -3,7 +3,6 @@ package com.chariot.shadow.news;
 import com.chariot.shadow.item.DeleteItem;
 import com.chariot.shadow.item.IndexItem;
 import com.chariot.shadow.item.Item;
-import lombok.Value;
 import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
@@ -15,7 +14,6 @@ import java.util.List;
 /**
  * Created by Trung Vu on 2017/06/12.
  */
-@Value
 public class IndexCreator {
 
     public static IndexRequestBuilder createIndex(Client client, String indexName, IndexItem item) {

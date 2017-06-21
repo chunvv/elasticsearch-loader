@@ -27,8 +27,8 @@ import java.util.concurrent.Future;
 public abstract class Loader implements Loadable {
 
     public static final String INDEX_NAME = "news";
-    private static int WAITING_THRESHOLD_PAUSE = 300;
-    private static int WAITING_THRESHOLD_RESUME = 200;
+    private static int WAITING_THRESHOLD_PAUSE = 10;
+    private static int WAITING_THRESHOLD_RESUME = 5;
 
     private int queueSize;
     private int executorSize;
@@ -42,8 +42,8 @@ public abstract class Loader implements Loadable {
     @Override
     public void init() {
         client = Elasticsearch.getInstance();
-        queueSize = 100;
-        executorSize = 8;
+        queueSize = 10;
+        executorSize = 10;
         executor = new ShadowThreadPoolExecutor(executorSize);
         queue = new ShadowQueue(queueSize);
     }

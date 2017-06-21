@@ -17,6 +17,6 @@ public enum ExecutorType {
     private String name;
 
     public static ExecutorType get(String name) {
-        return Stream.of(values()).filter(value -> value.name == name).findFirst().orElseThrow(IllegalArgumentException::new);
+        return Stream.of(values()).filter(value -> value.name.equals(name)).findFirst().orElseThrow(IllegalArgumentException::new);
     }
 }

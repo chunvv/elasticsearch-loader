@@ -33,7 +33,8 @@ public class Elasticsearch {
             throw new RuntimeException(e);
         }
 
-        TransportClient client = new PreBuiltTransportClient(Settings.EMPTY);
+        Settings settings = Settings.builder().put("cluster.name", "shadow").put("client.transport.sniff", true).build();
+        TransportClient client = new PreBuiltTransportClient(settings);
         try {
             for (String node : nodes.split(",")) {
                 client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(node), 9300));
