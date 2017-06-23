@@ -9,6 +9,7 @@ import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.log4j.Logger;
 import org.elasticsearch.client.Client;
 
 import java.util.LinkedList;
@@ -27,8 +28,8 @@ import java.util.concurrent.Future;
 public abstract class Loader implements Loadable {
 
     public static final String INDEX_NAME = "news";
-    private static int WAITING_THRESHOLD_PAUSE = 10;
-    private static int WAITING_THRESHOLD_RESUME = 5;
+    private static int WAITING_THRESHOLD_PAUSE = 30;
+    private static int WAITING_THRESHOLD_RESUME = 20;
 
     private int queueSize;
     private int executorSize;
@@ -58,20 +59,24 @@ public abstract class Loader implements Loadable {
         while ((future = futures.pollFirst()) != null) {
             future.get().forEach(index -> queue.add(index));
             if (queue.hasExecutable()) {
-                afterExecute();
                 indexing();
+                afterExecute();
             }
         }
         queue.close();
+        indexing();
+        shutdown();
     }
 
     @Override
     public void shutdown() {
         executor.shutdown();
+        System.out.println("Shutting down loader");
     }
 
     @Override
     public void beforeExecute() {
+        System.out.println("Starting loader");
         if (queue.waitingSize() > WAITING_THRESHOLD_PAUSE) {
             executor.pause();
         }
@@ -89,11 +94,13 @@ public abstract class Loader implements Loadable {
         List<Item> items;
         while (queue.indexingSize() < WAITING_THRESHOLD_RESUME && (items = queue.pollFirst()) != null) {
             indexingExecutor.execute(new ElasticsearchThread(Optional.of(this), items));
+            updateUpdateSign(items);
         }
     }
 
     @Override
     public void updateStatus(Message message) {
         queue.increaseComplete(message.getSize());
+        System.out.println("Completed and increasing completed size in queue for " + message.getSize() + " elements");
     }
 }

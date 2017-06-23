@@ -1,7 +1,7 @@
 package com.chariot.shadow.news.factory;
 
 import com.chariot.shadow.news.*;
-import com.chariot.shadow.supplier.Supplier;
+import com.chariot.shadow.news.supplier.Supplier;
 
 /**
  * Creating new instance of News

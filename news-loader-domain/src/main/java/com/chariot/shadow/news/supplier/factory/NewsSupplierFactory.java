@@ -1,19 +1,19 @@
-package com.chariot.shadow.supplier.factory;
+package com.chariot.shadow.news.supplier.factory;
 
-import com.chariot.shadow.supplier.*;
+import com.chariot.shadow.news.supplier.*;
 
 /**
  * Factory for Supplier class
  * <p>
  * Created by Trung Vu on 2017/05/27.
  */
-public class SupplierFactory {
+public class NewsSupplierFactory {
 
-    public static Supplier create(SupplierType supplierType) {
+    public static Supplier create(NewsSupplierType newsSupplierType) {
         return new Supplier(
-                new SupplierID(supplierType.getId()),
-                new SupplierCode(supplierType.getCode()),
-                new SupplierName(supplierType.getName())
+                new SupplierID(newsSupplierType.getId()),
+                new SupplierCode(newsSupplierType.getCode()),
+                new SupplierName(newsSupplierType.getName())
         );
     }
 

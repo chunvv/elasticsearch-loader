@@ -1,6 +1,6 @@
 package com.chariot.shadow.news;
 
-import com.chariot.shadow.supplier.Supplier;
+import com.chariot.shadow.news.supplier.Supplier;
 import lombok.Value;
 
 import java.util.Date;

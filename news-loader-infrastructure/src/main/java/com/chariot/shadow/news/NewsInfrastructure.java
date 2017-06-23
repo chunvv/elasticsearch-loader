@@ -62,7 +62,8 @@ public class NewsInfrastructure {
 
     private Predicate[] newsDetectionPredicatesByActionCode(CriteriaBuilder builder, Root<NewsEntity> root, String actionCode) {
         return new Predicate[]{
-                builder.equal(root.get(NewsEntity_.actionCode), actionCode)
+                builder.equal(root.get(NewsEntity_.actionCode), actionCode),
+                builder.equal(root.get(NewsEntity_.updateSign), 1)
         };
     }
 
@@ -70,5 +71,13 @@ public class NewsInfrastructure {
         return new Predicate[]{
                 builder.equal(root.get(NewsEntity_.newsId), newsId)
         };
+    }
+
+    public void updateUpdateSign(String newsId, int updateSign) {
+        NewsEntity newsEntity = find(newsId);
+        beforeExecute();
+        newsEntity.setUpdateSign(updateSign);
+        entityManager.merge(newsEntity);
+        afterExecute();
     }
 }

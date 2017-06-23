@@ -57,6 +57,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
     public void put() {
         if (running.size() >= size) {
             store.add(running);
+            System.out.println("Added " + running.size() + " elements to store");
             running = new LinkedList<>();
         }
     }
@@ -65,6 +66,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
     public void close() {
         if (running.size() != 0) {
             store.add(running);
+            System.out.println("Close Queue");
         }
     }
 
@@ -76,6 +78,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
     @Override
     public List<Item> pollFirst() {
         requested.addAndGet(size);
+        System.out.println("Getting " + size + " elements to executing");
         return store.poll();
     }
 
@@ -86,6 +89,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
 
     @Override
     public int indexingSize() {
+        System.out.println("Indexing elements: " + (requested.get() - completed.get()));
         return requested.get() - completed.get();
     }
 }

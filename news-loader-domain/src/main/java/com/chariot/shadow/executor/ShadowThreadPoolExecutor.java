@@ -66,6 +66,4 @@ public class ShadowThreadPoolExecutor extends ThreadPoolExecutor implements Exec
     public boolean isPaused() {
         return paused;
     }
-
-
 }

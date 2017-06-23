@@ -19,4 +19,8 @@ public class NewsRepository {
     public List<News> retrieveDeleteNews() {
         return newsInfrastructure.retrieveDeleteNews().stream().map(NewsMapper::map).collect(Collectors.toList());
     }
+
+    public void updateUpdateSign(NewsID newsID, int updateSign) {
+        newsInfrastructure.updateUpdateSign(newsID.getNewsID(), updateSign);
+    }
 }

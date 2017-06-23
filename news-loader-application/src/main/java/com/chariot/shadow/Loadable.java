@@ -2,8 +2,10 @@ package com.chariot.shadow;
 
 import com.chariot.shadow.executor.Message;
 import com.chariot.shadow.indexing.Index;
+import com.chariot.shadow.item.Item;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -27,4 +29,6 @@ public interface Loadable {
     void indexing();
 
     void updateStatus(Message message);
+    
+    void updateUpdateSign(List<Item> items);
 }

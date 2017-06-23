@@ -3,8 +3,10 @@ package com.chariot.shadow.news;
 import com.chariot.shadow.Loader;
 import com.chariot.shadow.id.Id;
 import com.chariot.shadow.indexing.Index;
+import com.chariot.shadow.item.Item;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
@@ -38,5 +40,10 @@ public class NewsLoader extends Loader {
                 map(news -> executor.
                         submit(new NewsDeleteTaskLoader(queue, new Id(news.getIdAsString())))).
                 collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public void updateUpdateSign(List<Item> items) {
+        items.forEach(item -> newsRepository.updateUpdateSign(new NewsID(item.id()), 0));
     }
 }
