@@ -9,22 +9,20 @@ import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.Client;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * Created by Trung Vu on 2017/06/12.
  */
 @NoArgsConstructor
 @Getter
+@Slf4j
 public abstract class Loader implements Loadable {
 
     public static final String INDEX_NAME = "news";
@@ -47,18 +45,19 @@ public abstract class Loader implements Loadable {
         executorSize = 10;
         executor = new ShadowThreadPoolExecutor(executorSize);
         queue = new ShadowQueue(queueSize);
+        log.info("Starting Loader with Queue size is: " + queueSize + " and executor size is: " + executorSize);
     }
 
     @Override
     public void run() throws ExecutionException, InterruptedException {
         init();
-        beforeExecute();
         futures = submit();
         executor.shutdown();
         Future<Index> future;
         while ((future = futures.pollFirst()) != null) {
             future.get().forEach(index -> queue.add(index));
             if (queue.hasExecutable()) {
+                beforeExecute();
                 indexing();
                 afterExecute();
             }
@@ -69,30 +68,32 @@ public abstract class Loader implements Loadable {
     }
 
     @Override
-    public void shutdown() {
+    public void shutdown() throws InterruptedException {
         executor.shutdown();
-        System.out.println("Shutting down loader");
+        indexingExecutor.shutdown();
+        log.info("Shutting down loader");
     }
 
     @Override
     public void beforeExecute() {
-        System.out.println("Starting loader");
-        if (queue.waitingSize() > WAITING_THRESHOLD_PAUSE) {
+        if (queue.waitingSize() > WAITING_THRESHOLD_PAUSE && !executor.isPaused()) {
             executor.pause();
+            log.info("Paused Executor");
         }
     }
 
     @Override
     public void afterExecute() {
-        if (queue.waitingSize() < WAITING_THRESHOLD_RESUME) {
+        if (queue.waitingSize() < WAITING_THRESHOLD_RESUME && executor.isPaused()) {
             executor.resume();
+            log.info("Resumed Executor");
         }
     }
 
     @Override
     public void indexing() {
         List<Item> items;
-        while (queue.indexingSize() < WAITING_THRESHOLD_RESUME && (items = queue.pollFirst()) != null) {
+        while ((items = queue.pollFirst()) != null) {
             indexingExecutor.execute(new ElasticsearchThread(Optional.of(this), items));
             updateUpdateSign(items);
         }
@@ -101,6 +102,5 @@ public abstract class Loader implements Loadable {
     @Override
     public void updateStatus(Message message) {
         queue.increaseComplete(message.getSize());
-        System.out.println("Completed and increasing completed size in queue for " + message.getSize() + " elements");
     }
 }

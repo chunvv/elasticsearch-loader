@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d [%t] %-5p %c{10} - %m%n%ex{0}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/data/shadow/log/elasticsearch_loader/elasticsearch_loader_%d{yyyy-MM-dd}.gz
+            </fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d [%t] %-5p %c - %m%n%ex</pattern>
+        </encoder>
+    </appender>
+    <logger name="com.chariot">
+        <level value="INFO"/>
+    </logger>
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

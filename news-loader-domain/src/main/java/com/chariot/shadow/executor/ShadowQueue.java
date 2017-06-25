@@ -1,6 +1,7 @@
 package com.chariot.shadow.executor;
 
 import com.chariot.shadow.item.Item;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Trung Vu on 2017/06/06.
  */
+@Slf4j
 public class ShadowQueue implements com.chariot.shadow.executor.Queue {
 
     private final int size;
@@ -57,7 +59,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
     public void put() {
         if (running.size() >= size) {
             store.add(running);
-            System.out.println("Added " + running.size() + " elements to store");
+            requested.addAndGet(running.size());
             running = new LinkedList<>();
         }
     }
@@ -66,7 +68,7 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
     public void close() {
         if (running.size() != 0) {
             store.add(running);
-            System.out.println("Close Queue");
+            requested.addAndGet(running.size());
         }
     }
 
@@ -77,19 +79,17 @@ public class ShadowQueue implements com.chariot.shadow.executor.Queue {
 
     @Override
     public List<Item> pollFirst() {
-        requested.addAndGet(size);
-        System.out.println("Getting " + size + " elements to executing");
         return store.poll();
     }
 
     @Override
     public void increaseComplete(int size) {
         completed.addAndGet(size);
+        log.info("Size of requested elements: " + requested.get() + ", Size of completed elements: " + completed.get());
     }
 
     @Override
     public int indexingSize() {
-        System.out.println("Indexing elements: " + (requested.get() - completed.get()));
         return requested.get() - completed.get();
     }
 }

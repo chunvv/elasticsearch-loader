@@ -20,7 +20,7 @@ public interface Loadable {
 
     void run() throws ExecutionException, InterruptedException;
 
-    void shutdown();
+    void shutdown() throws InterruptedException;
 
     void beforeExecute();
 
