@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,7 +48,7 @@ public class NewsInfrastructure {
         query.where(newsDetectionPredicatesByActionCode(b, query.from(NewsEntity.class), "I"));
         List<NewsEntity> newsEntities = entityManager.createQuery(query).getResultList();
         afterExecute();
-        return newsEntities.size() == 0 ? null : newsEntities;
+        return newsEntities.size() == 0 ? Collections.emptyList() : newsEntities;
     }
 
     public List<NewsEntity> retrieveDeleteNews() {
@@ -57,7 +58,7 @@ public class NewsInfrastructure {
         query.where(newsDetectionPredicatesByActionCode(b, query.from(NewsEntity.class), "D"));
         List<NewsEntity> newsEntities = entityManager.createQuery(query).getResultList();
         afterExecute();
-        return newsEntities.size() == 0 ? null : newsEntities;
+        return newsEntities.size() == 0 ? Collections.emptyList() : newsEntities;
     }
 
     private Predicate[] newsDetectionPredicatesByActionCode(CriteriaBuilder builder, Root<NewsEntity> root, String actionCode) {
@@ -75,9 +76,11 @@ public class NewsInfrastructure {
 
     public void updateUpdateSign(String newsId, int updateSign) {
         NewsEntity newsEntity = find(newsId);
-        beforeExecute();
-        newsEntity.setUpdateSign(updateSign);
-        entityManager.merge(newsEntity);
-        afterExecute();
+        if (newsEntity != null) {
+            beforeExecute();
+            newsEntity.setUpdateSign(updateSign);
+            entityManager.merge(newsEntity);
+            afterExecute();
+        }
     }
 }
