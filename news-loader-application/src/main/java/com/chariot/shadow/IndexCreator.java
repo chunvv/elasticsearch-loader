@@ -1,4 +1,4 @@
-package com.chariot.shadow.news;
+package com.chariot.shadow;
 
 import com.chariot.shadow.item.DeleteItem;
 import com.chariot.shadow.item.IndexItem;

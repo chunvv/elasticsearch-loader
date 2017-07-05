@@ -5,7 +5,7 @@ import com.chariot.shadow.id.Id;
 import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.IndexItem;
 import com.chariot.shadow.item.IndexType;
-import com.chariot.shadow.news.util.MapBuilder;
+import com.chariot.shadow.news.util.NewsMapBuilder;
 import com.chariot.shadow.news.util.NewsMapper;
 import mockit.*;
 import org.hamcrest.core.Is;
@@ -26,14 +26,14 @@ public class NewsIndexTaskLoaderTest {
     @Injectable protected Id id;
 
     @Test
-    public void loadIndexTask(@Mocked NewsEntity newsEntity, @Mocked News news, @Mocked Index index, @Mocked NewsMapper newsMapper, @Mocked MapBuilder mapBuilder) throws Exception {
+    public void loadIndexTask(@Mocked NewsEntity newsEntity, @Mocked News news, @Mocked Index index, @Mocked NewsMapper newsMapper, @Mocked NewsMapBuilder newsMapBuilder) throws Exception {
         Deencapsulation.setField(newsIndexTaskLoader, "newsInfrastructure", newsInfrastructure);
         
         new Expectations(newsIndexTaskLoader) {{
             newsIndexTaskLoader.getId(); result = new Id("ID"); 
             newsInfrastructure.find("ID"); result = newsEntity;
             NewsMapper.map(newsEntity); result = news;
-            MapBuilder.build(news); result = new HashMap<>();
+            NewsMapBuilder.build(news); result = new HashMap<>();
         }};
         
         Index actual = new Index();

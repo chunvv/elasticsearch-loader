@@ -1,9 +1,11 @@
 package com.chariot.shadow.news.util;
 
+import com.chariot.shadow.country.Country;
+import com.chariot.shadow.language.Language;
 import com.chariot.shadow.news.*;
 import com.chariot.shadow.news.factory.NewsFactory;
-import com.chariot.shadow.news.supplier.NewsSupplierType;
-import com.chariot.shadow.news.supplier.factory.NewsSupplierFactory;
+import com.chariot.shadow.supplier.news.NewsSupplierType;
+import com.chariot.shadow.supplier.factory.NewsSupplierFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,8 +36,10 @@ public class NewsMapper {
                     new NewsID(newsEntity.getNewsId()),
                     new Title(newsEntity.getTitle()),
                     new Content(newsEntity.getContent()),
-                    newsEntity.getLink() == null ? null : new Link(new URL(newsEntity.getLink())),
+                    new Link(new URL(newsEntity.getLink())),
                     new PublicationDate(newsEntity.getPublishDate()),
+                    Language.get(newsEntity.getLanguage()),
+                    Country.get(newsEntity.getCountry()),
                     NewsSupplierFactory.create(
                             NewsSupplierType.get(
                                     Integer.valueOf(newsEntity.getSupplierId())))

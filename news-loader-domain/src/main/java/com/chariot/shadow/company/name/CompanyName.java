@@ -10,4 +10,12 @@ public class CompanyName {
 
     private CompanyEnglishName englishName;
     private CompanyLocalName localName;
+
+    public String getCompanyEnglishNameAsString() {
+        return englishName.getName();
+    }
+
+    public String getCompanyLocalNameAsString() {
+        return localName.getName();
+    }
 }

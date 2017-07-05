@@ -1,4 +1,4 @@
-package com.chariot.shadow.news.supplier;
+package com.chariot.shadow.supplier;
 
 import lombok.Value;
 

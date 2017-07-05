@@ -19,4 +19,16 @@ public class Company {
     private CompanyWebUrl webUrl;
     private CompanyDescription description;
     private Supplier supplier;
+
+    public int getSupplierId() {
+        return supplier.getIdAsInt();
+    }
+
+    public String getSupplierCode() {
+        return supplier.getCodeAsString();
+    }
+
+    public String getSupplierName() {
+        return supplier.getNameAsString();
+    }
 }

@@ -15,7 +15,10 @@ import org.elasticsearch.client.Client;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by Trung Vu on 2017/06/12.
@@ -25,13 +28,13 @@ import java.util.concurrent.*;
 @Slf4j
 public abstract class Loader implements Loadable {
 
-    public static final String INDEX_NAME = "news";
-    private static int WAITING_THRESHOLD_PAUSE = 30;
-    private static int WAITING_THRESHOLD_RESUME = 20;
+    private static int WAITING_THRESHOLD_PAUSE = 300;
+    private static int WAITING_THRESHOLD_RESUME = 200;
 
     private int queueSize;
     private int executorSize;
     protected Client client;
+    protected String indexName;
 
     protected ShadowThreadPoolExecutor executor;
     protected ShadowQueue queue;
@@ -41,8 +44,8 @@ public abstract class Loader implements Loadable {
     @Override
     public void init() {
         client = Elasticsearch.getInstance();
-        queueSize = 10;
-        executorSize = 10;
+        queueSize = 100;
+        executorSize = 100;
         executor = new ShadowThreadPoolExecutor(executorSize);
         queue = new ShadowQueue(queueSize);
         log.info("Starting Loader with Queue size is: " + queueSize + " and executor size is: " + executorSize);

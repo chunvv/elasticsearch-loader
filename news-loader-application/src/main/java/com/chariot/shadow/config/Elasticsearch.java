@@ -18,16 +18,20 @@ import java.util.Properties;
 public class Elasticsearch {
 
     private static final String NEWS_INDEX;
+    private static final String COMPANY_INDEX;
+
     private static final TransportClient CLIENT;
 
     static {
         String newsIndex = "news";
+        String companyIndex = "company";
         Properties properties = new Properties();
         String nodes = "127.0.0.1";
 
         try {
             properties.load(new FileInputStream("/data/shadow/config/elasticsearch.properties"));
             newsIndex = properties.getProperty("news", newsIndex);
+            companyIndex = properties.getProperty("company", companyIndex);
             nodes = properties.getProperty("nodes", nodes);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -44,6 +48,7 @@ public class Elasticsearch {
         }
 
         NEWS_INDEX = newsIndex;
+        COMPANY_INDEX = companyIndex;
         CLIENT = client;
     }
 

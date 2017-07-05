@@ -17,9 +17,9 @@ public class NewsInfrastructure {
 
     private EntityManager entityManager;
 
-    private static final String NEWS_CRAWLER_PERSISTENCE_UNIT_NAME = "news-loader";
+    private static final String NEWS_LOADER_PERSISTENCE_UNIT_NAME = "news-loader";
 
-    private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(NEWS_CRAWLER_PERSISTENCE_UNIT_NAME);
+    private static EntityManagerFactory factory = Persistence.createEntityManagerFactory(NEWS_LOADER_PERSISTENCE_UNIT_NAME);
 
     private void beforeExecute() {
         entityManager = factory.createEntityManager();

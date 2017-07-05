@@ -18,6 +18,12 @@ public class NewsLoader extends Loader {
     private NewsRepository newsRepository = new NewsRepository();
 
     @Override
+    public void init() {
+        indexName = "news";
+        super.init();
+    }
+
+    @Override
     public LinkedList<Future<Index>> submit() {
         LinkedList<Future<Index>> result = new LinkedList<>();
         result.addAll(submitIndexNews());

@@ -6,7 +6,7 @@ import com.chariot.shadow.id.Id;
 import com.chariot.shadow.indexing.Index;
 import com.chariot.shadow.item.IndexItem;
 import com.chariot.shadow.item.IndexType;
-import com.chariot.shadow.news.util.MapBuilder;
+import com.chariot.shadow.news.util.NewsMapBuilder;
 import com.chariot.shadow.news.util.NewsMapper;
 
 /**
@@ -27,7 +27,7 @@ public class NewsIndexTaskLoader extends TaskLoader<Id> {
                 new IndexItem(
                         IndexType.IMPORT,
                         getId(),
-                        MapBuilder.build(
+                        NewsMapBuilder.build(
                                 NewsMapper.map(newsInfrastructure.find(getId().getId())))));
         return index;
     }

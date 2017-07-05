@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Trung Vu on 2017/06/12.
  */
-public class MapBuilder {
+public class NewsMapBuilder {
 
     public static Map<String, Object> build(News news) {
         Map<String, Object> result = new HashMap<>();
@@ -19,7 +19,9 @@ public class MapBuilder {
         result.put("content", news.getContentAsString());
         result.put("link", news.getLinkAsString());
         result.put("publishDate", news.getPublicationDateAsDate());
-
+        result.put("language", news.getLanguage().getCode());
+        result.put("country", news.getCountry().getIsoCode());
+        
         return result;
     }
 }

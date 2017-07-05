@@ -1,8 +1,8 @@
 package com.chariot.shadow.executor;
 
+import com.chariot.shadow.IndexCreator;
 import com.chariot.shadow.Loader;
 import com.chariot.shadow.item.Item;
-import com.chariot.shadow.news.IndexCreator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class ElasticsearchThread implements Runnable, Notifier<Loader, Message> 
         List<String> errors = new ArrayList<>();
         if (loader.isPresent()) {
             IndexCreator.
-                    createBulkIndex(loader.get().getClient(), items, Loader.INDEX_NAME).
+                    createBulkIndex(loader.get().getClient(), items, loader.get().getIndexName()).
                     execute().
                     actionGet().
                     forEach(response -> {

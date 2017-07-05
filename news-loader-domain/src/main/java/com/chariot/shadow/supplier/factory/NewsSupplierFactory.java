@@ -1,6 +1,7 @@
-package com.chariot.shadow.news.supplier.factory;
+package com.chariot.shadow.supplier.factory;
 
-import com.chariot.shadow.news.supplier.*;
+import com.chariot.shadow.supplier.*;
+import com.chariot.shadow.supplier.news.NewsSupplierType;
 
 /**
  * Factory for Supplier class

@@ -1,6 +1,8 @@
 package com.chariot.shadow.news;
 
-import com.chariot.shadow.news.supplier.Supplier;
+import com.chariot.shadow.country.Country;
+import com.chariot.shadow.language.Language;
+import com.chariot.shadow.supplier.Supplier;
 import lombok.Value;
 
 import java.util.Date;
@@ -18,7 +20,8 @@ public class News {
     private Content content;
     private Link link;
     private PublicationDate publicationDate;
-
+    private Language language;
+    private Country country;
     private Supplier supplier;
 
     public String getIdAsString() {

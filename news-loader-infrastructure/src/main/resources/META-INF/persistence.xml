@@ -17,4 +17,18 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
                       value="database"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="company-loader" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>com.chariot.shadow.economy.company.CompanyEntity</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://127.0.0.1:3306/economy"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode"
+                      value="database"/>
+        </properties>
+    </persistence-unit>
 </persistence>
